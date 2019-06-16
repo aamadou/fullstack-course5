@@ -1,0 +1,9 @@
+<div style="clear: left">
+    <ul>
+        <li ng-repeat="Item in list.found">
+            {{ Item.name }}, {{ Item.short_name }}, {{ Item.description }}
+            <button ng-click="list.onRemove({index:$index});" class="btn">Don't want this one!!</button>
+        </li>
+    </ul>
+    <div ng-if="list.notFound">"Nothing found"</div>
+</div>
