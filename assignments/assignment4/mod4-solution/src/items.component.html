@@ -1,1 +1,11 @@
-<div>This is TAB 2 content</div>
+<!--<div>{{$ctrl.categoryItems.category.name}}</div>-->
+<!--<div>{{$ctrl.categoryItems.category.special_instructions}}</div>-->
+<ul>
+    <li ng-repeat="item in $ctrl.categoryItems.menu_items">
+        Name : {{ item.name }}
+        <ul>
+            <li> Code : {{ item.short_name }}</li>
+            <li> Description : {{ item.description }}</li>
+        </ul>
+    </li>
+</ul>

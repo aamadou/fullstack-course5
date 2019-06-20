@@ -11,14 +11,34 @@
 
         // Set up UI states
         $stateProvider
+            .state('home', {
+                url: '/',
+                templateUrl: 'src/home.html'
+            })
+
             .state('categories', {
                 url: '/categories',
-                templateUrl: 'src/categories.component.html'
+                templateUrl: 'src/categories.template.html',
+                controller : 'CategoriesController as myCategories',
+                resolve : {
+                    items: ['MenuDataService', function (MenuDataService) {
+                        return MenuDataService.getAllCategories();
+                    }]
+                }
             })
 
             .state('items', {
-                url: '/items',
-                templateUrl: 'src/items.component.html'
+                url: '/items/Category={categoryShortName}',
+                templateUrl: 'src/items.template.html',
+                controller : 'ItemsController as myItems',
+                resolve : {
+                    categoryItems: ['$stateParams','MenuDataService', function ($stateParams,MenuDataService) {
+                        return MenuDataService.getItemsForCategory($stateParams.categoryShortName);
+                    }]
+                },
+                params : {
+                    categoryShortName : null
+                }
             });
 }
 })();

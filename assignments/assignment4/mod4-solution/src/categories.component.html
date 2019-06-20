@@ -1,1 +1,9 @@
-<div>This is TAB 1 content</div>
+<ul>
+    <li ng-repeat="item in $ctrl.items">
+        <a ui-sref="items({categoryShortName: item.short_name})" >
+
+            Category : {{ item.name }}</a>
+        <br>
+        Description :  {{ item.special_instructions }}
+    </li>
+</ul>
