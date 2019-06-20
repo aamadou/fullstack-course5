@@ -23,6 +23,10 @@
             found="NarrowList.MenuItems"
             on-remove="NarrowList.removeItem($index)"
             not-found="NarrowList.NothingFound"></found-items>
+     <div class="loader" ng-if="NarrowList.isLoading"></div>
+    <loading>
+        itis-loading="NarrowList.isLoading"
+    </loading>
   </div>
 
 </body>

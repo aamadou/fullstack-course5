@@ -4,7 +4,21 @@
     angular.module('NarrowItDownApp', [])
         .controller('NarrowItDownController', NarrowItDownController)
         .service('MenuSearchService',MenuSearchService)
-        .directive('foundItems',foundItemsDirective);
+        .directive('foundItems',foundItemsDirective)
+        .directive('loading',loadingDirective);
+
+    function loadingDirective() {
+        var ddo = {
+            templateUrl: './loader/itemsloaderindicator.template.html',
+            scope: {
+                itisLoading: '<',
+            },
+            controller: NarrowItDownController,
+            controllerAs: 'list',
+            bindToController: true
+        };
+        return ddo;
+    }
 
     function foundItemsDirective(){
         var ddo = {
@@ -18,7 +32,6 @@
             controllerAs: 'list',
             bindToController: true
         };
-
         return ddo;
     }
 
@@ -54,7 +67,8 @@
         NarrowList.shortName="";
         NarrowList.MenuItems=[];
         NarrowList.NothingFound=false;
-
+        NarrowList.isLoading=false;
+        console.log('Controler says is Laoding = '+ NarrowList.isLoading);
         NarrowList.NarrowItDown = function () {
 
             var promise=MenuSearchService.getMatchedMenuItems(NarrowList.shortName);
@@ -64,7 +78,10 @@
                 NarrowList.NothingFound=true;
                 return
             }
-            promise.then(function (response) {
+            NarrowList.isLoading=true;
+            console.log('Controler says is Laoding = '+ NarrowList.isLoading);
+            promise
+                .then(function (response) {
                 NarrowList.MenuItems = response;
                 if (NarrowList.MenuItems.length==0){
                     NarrowList.NothingFound=true;
@@ -73,8 +90,10 @@
             })
                 .catch(function (error) {
                     console.log("Something went terribly wrong.");
+                })
+                .finally(function () {
+                    NarrowList.isLoading=false;
                 });
-
 
         }
 
